@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Christian A. Harris">
+    <title>URL Shortener</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./vendor/fontawesome-free/css/all.min.css">
+</head>
+<body>
+    <section class="main-container">
+        <header>
+            <h1>URL Shortener</h1>
+            <p>Convert long URLs into shorter ones with a single click. It's easy, simple, and absolutely free!</p>
+        </header>
+
+        <!-- <main> -->
+            <form action="/" method="post" aria-label="URL Shortener Form">
+                <input 
+                    type="url" 
+                    name="long_url" 
+                    id="url" 
+                    placeholder="Paste your URL here..." 
+                    required 
+                    aria-label="Input your long URL to shorten"
+                >
+                <button type="submit" id="generated-link-btn">Shorten</button>
+            </form>
+
+            <% if (shortURL) { %>
+            <section class="generated-link" id="generated-link-container">
+                <h2>Generated Link: </h2>
+                <p>
+                    <a href="<%= `${baseURL}/${shortURL}` %>" target="_blank" id="generated-link">
+                        <%= `${baseURL}/${shortURL}` %>
+                    </a>
+                </p>
+                <section>
+                    <p class="tooltip-container">
+                        <span class="fa fa-copy" id="tooltip" onclick="copyToClipboard('<%= `${baseURL}/${shortURL}` %>')">
+                            <span id="tooltip-text">Copy</span>
+                        </span>
+                    </p>
+                </section>
+            </section>
+            <% } else { %>
+            <p class="no-response">No link generated yet. Please submit a URL.</p>
+            <% } %>
+
+        <footer>
+            <ul class="social-links">
+                <li><a href="" aria-label="Facebook"><i class="fab fa-facebook"></i></a></li>
+                <li><a href="mailto:astainyharris1@gmail.com" aria-label="Google"><i class="fab fa-google"></i></a></li>
+                <li><a href="https://github.com/astainy1" aria-label="GitHub"><i class="fab fa-github"></i></a></li>
+            </ul>
+            <p>&copy; <%= new Date().getFullYear() %> URL Shortener. All rights reserved.</p>
+        </footer>
+    </section>
+
+    <script src="./js/main.js"></script>
+    <script>
+        // Copy to clipboard functionality
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById("tooltip-text").textContent = 'Copied';
+                // alert('URL copied to clipboard!');
+            }).catch(err => {
+                console.error('Error copying to clipboard:', err);
+            });
+        }
+    </script>
+</body>
+</html>
